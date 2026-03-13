@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Analyzer</title>
+    <style>
+        /* Full-page gradient background */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #4b79a1, #283e51); /* smooth professional gradient */
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        /* Centered container */
+        .container {
+            background-color: rgba(0, 0, 0, 0.65); /* semi-transparent dark overlay */
+            padding: 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 700px;
+            margin: 50px auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            color: #ffd700; /* subtle accent */
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #e6c200;
+        }
+
+        pre {
+            background-color: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        /* Footer / small notes */
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 20px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Analyzer</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="resume" accept=".pdf" required>
+            <button type="submit">Upload & Analyze</button>
+        </form>
+
+        {% if result %}
+        <h2>Analysis Result:</h2>
+        <pre>{{ result }}</pre>
+        {% endif %}
+
+        {% if pdf_ready %}
+        <form action="/download" method="post">
+            <input type="hidden" name="score" value="{{ score }}">
+            <input type="hidden" name="analysis_text" value="{{ result|replace('\n','&#10;') }}">
+            <button type="submit">Download PDF</button>
+        </form>
+        {% endif %}
+
+        <div class="footer">
+            Developed by Raksha Mogulla
+        </div>
+    </div>
+</body>
+</html>
